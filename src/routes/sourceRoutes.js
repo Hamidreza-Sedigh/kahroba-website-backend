@@ -6,6 +6,7 @@ const auth = require('../middlewares/auth');
 // همه‌ی مسیرهای این روتر محافظت‌شده‌اند
 // router.use(auth);
 
+router.get('/getSources', sourceController.getAllSources);
 router.get('/distinct',  sourceController.getDistinctSources);
 router.get('/:sourceName',  sourceController.getOneSource);
 

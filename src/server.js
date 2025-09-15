@@ -7,6 +7,7 @@ const newsRoutes = require("./routes/newsRoutes");
 const userRoutes = require("./routes/userRoutes");
 const sourceRoutes = require("./routes/sourceRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const publicRoutes = require('./routes/public');
 
 const connectDB =  require('./config/db');
 // const authRoutes = require("./routes/authRoutes");
@@ -39,10 +40,14 @@ app.use(cors({
 
 
 // Routes
+app.get('/api/status', (req, res) => {
+  res.send({ status: 200 });
+});
 app.use("/api/news", newsRoutes);
 app.use("/api/auth", userRoutes);
 app.use("/api/sources", sourceRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use('/api', publicRoutes);
 
 // صفحه 404
 app.use((req, res) => {
