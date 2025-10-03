@@ -7,6 +7,7 @@ const config = require('../config/index');
 const JWT_SECRET = config.jwt.secret;
 
 exports.registerUser = async (req, res) => {
+  console.log("backend-registerUser");
   try {
     const { username, email, password } = req.body;
 
