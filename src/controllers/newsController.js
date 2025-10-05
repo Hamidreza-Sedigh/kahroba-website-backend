@@ -1,4 +1,6 @@
 const News = require('../models/News');
+const ReadHistory = require('../models/ReadHistory');
+const mongoose = require("mongoose");
 
 module.exports = {
     // دریافت همه خبرها
@@ -180,24 +182,62 @@ module.exports = {
     },
 
     async getNewsByShortId(req, res) {
+        console.log("getNewsByShortId started..");
         try {
-            const { shortId } = req.params;
-            const newsItem = await News.findOneAndUpdate(
+          const { shortId } = req.params;
+      
+          // افزایش view قبل از ارسال خبر
+          const newsItem = await News.findOneAndUpdate(
             { shortId },
-            { $inc: { views: 1 } },
-            { new: true }
-            );
-
-            if (!newsItem) {
+            { $inc: { views: 1 } }, // افزایش بازدید
+            { new: true }           // بازگرداندن سند بروز شده
+          );
+      
+          if (!newsItem) {
             return res.status(404).json({ error: 'خبر پیدا نشد' });
-            }
-
-            res.json(newsItem);
+          }
+      
+          res.json(newsItem); // ارسال خبر به فرانت‌اند
         } catch (error) {
-            console.error('❌ Error fetching news:', error.message);
-            res.status(500).json({ error: 'خطا در سرور' });
+          console.error('❌ Error fetching news:', error.message);
+          res.status(500).json({ error: 'خطا در سرور' });
         }
-    },
+      },
+	  async registerVisit(req, res) {
+        console.log("registerVisit started..");
+        try {
+          const { shortId } = req.params;
+          const userId = req.user?.userId;
+      
+          // فقط برای اطمینان خبر موجود است، view را افزایش نمی‌دهیم
+          const newsItem = await News.findOne({ shortId });
+      
+          if (!newsItem) {
+            return res.status(404).json({ error: "خبر پیدا نشد" });
+          }
+      
+          // ثبت یا آپدیت تاریخچه خوانده شده برای کاربر لاگین شده
+          if (userId) {
+            try {
+              await ReadHistory.findOneAndUpdate(
+                {
+                  user: new mongoose.Types.ObjectId(userId),
+                  news: new mongoose.Types.ObjectId(newsItem._id),
+                },
+                { readAt: new Date() },
+                { upsert: true, new: true }
+              );
+            } catch (err) {
+              console.error("❌ خطا در ثبت تاریخچه:", err.message);
+            }
+          }
+      
+          res.json({ message: "تاریخچه خوانده شده ثبت شد" });
+        } catch (error) {
+          console.error("❌ Error registering visit:", error.message);
+          res.status(500).json({ error: "خطا در ثبت تاریخچه" });
+        }
+      },
 
     async getOneSourceNews(req, res) {
         try {

@@ -13,7 +13,9 @@ router.get('/getOneSourceNews/:sourceName', newsController.getOneSourceNews);
 
 router.get('/id/:id', optionalAuth, newsController.getNewsById);// in fekonam baraye engine lazeme faghat
 
-router.get('/:shortId', newsController.getNewsByShortId);
+router.get('/:shortId', optionalAuth, newsController.getNewsByShortId);
+router.post('/:shortId/visit', optionalAuth, newsController.registerVisit);
+
 
 router.get('/', newsController.getFilteredNews);
 
