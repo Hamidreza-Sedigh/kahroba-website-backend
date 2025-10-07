@@ -4,6 +4,7 @@ const config = require('../config'); // از config/index.js می‌خوانیم
 
 function optionalAuth(req, res, next) {
   console.log("temp optionalAuth");
+  console.log("Headers received:", req.headers);
   const authHeader = req.headers["authorization"];
   if (authHeader) {
     const token = authHeader.split(" ")[1]; // Bearer token
