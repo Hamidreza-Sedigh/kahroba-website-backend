@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const config = require('../config'); // از config/index.js می‌خوانیم
 
 function optionalAuth(req, res, next) {
+  console.log("temp optionalAuth");
   const authHeader = req.headers["authorization"];
   if (authHeader) {
     const token = authHeader.split(" ")[1]; // Bearer token
