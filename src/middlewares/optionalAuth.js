@@ -7,7 +7,9 @@ function optionalAuth(req, res, next) {
   const authHeader = req.headers["authorization"];
   if (authHeader) {
     const token = authHeader.split(" ")[1]; // Bearer token
+    console.log("temp2 optionalAuth");
     try {
+      console.log("temp3 optionalAuth");
       console.log("🔍 Verifying token with key:", config.jwt.secret);
       const decoded = jwt.verify(token, config.jwt.secret);
       console.log("✅ Token verified. Decoded user:", decoded);
