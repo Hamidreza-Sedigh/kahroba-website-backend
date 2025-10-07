@@ -7,7 +7,7 @@ function optionalAuth(req, res, next) {
   if (authHeader) {
     const token = authHeader.split(" ")[1]; // Bearer token
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, config.jwt.secret);
       req.user = decoded; // اطلاعات کاربر در دسترس میشه
 
     } catch (err) {
