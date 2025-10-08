@@ -54,12 +54,10 @@ exports.loginUser = async (req, res) => {
 
     // تولید JWT
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { id: user._id, role: user.role, email: user.email },
       JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: '1d' }
     );
-    console.log("✅ JWT created with key:", JWT_SECRET);
-    console.log("🔑 Token:", token);
     
     res.json({ token });
   } catch (err) {
