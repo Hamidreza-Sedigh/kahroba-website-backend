@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["admin", "reporter", "user"],
-    default: "admin",
+    default: "user",
   },
   // ✅ فیلد جدید: وضعیت فعال بودن
   active: {
@@ -17,7 +17,8 @@ const UserSchema = new mongoose.Schema({
   },
   crawlerAdmin: { type: Boolean,  default: false },
   createdAt: { type: Date, default: Date.now },
-
 });
+
+
 
 module.exports = mongoose.model("User", UserSchema);

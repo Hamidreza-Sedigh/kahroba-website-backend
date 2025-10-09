@@ -1,25 +1,29 @@
 // middlewares/optionalAuth.js
 const jwt = require("jsonwebtoken");
-const config = require('../config'); // از config/index.js می‌خوانیم
+const config = require("../config");
 
 function optionalAuth(req, res, next) {
   const authHeader = req.headers["authorization"];
   
-  if (authHeader) {  
-    const token = authHeader.split(" ")[1]; // Bearer token
+  if (authHeader?.startsWith("Bearer ")) {
+    const token = authHeader.split(" ")[1];
     try {
       const decoded = jwt.verify(token, config.jwt.secret);
-      req.user = decoded; // اطلاعات کاربر در دسترس میشه
+
+      // فقط فیلدهای مورد نیاز را نگه می‌داریم
+      req.user = {
+        userId: decoded.userId,
+        role: decoded.role,
+        email: decoded.email,
+      };
 
     } catch (err) {
-      console.log("ERROR:", err);
       console.log("❌ optionalAuth: توکن نامعتبر، ادامه بدون کاربر");
-      // عمداً next رو صدا میزنیم، چون نباید 401 بدیم
+      console.log("ERROR:", err.message);
+      // ادامه بدون توقف (no 401)
     }
   }
-  // else {
-  //   console.log("⚠️ optionalAuth: هیچ توکنی ارسال نشده");
-  // }
+
   next();
 }
 

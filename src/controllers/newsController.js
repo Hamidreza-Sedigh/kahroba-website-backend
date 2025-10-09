@@ -206,19 +206,23 @@ module.exports = {
 	  async registerVisit(req, res) {
         console.log("registerVisit started..");
         try {
+          console.log("req.params:", req.params);
+          console.log("req.user:", req.user);
           const { shortId } = req.params;
           const userId = req.user?.userId;
-      
+          console.log("registerVisit test 2");
           // فقط برای اطمینان خبر موجود است، view را افزایش نمی‌دهیم
           const newsItem = await News.findOne({ shortId });
-      
+          console.log("registerVisit test 3");
           if (!newsItem) {
             return res.status(404).json({ error: "خبر پیدا نشد" });
           }
-      
+          console.log("registerVisit test 4");
           // ثبت یا آپدیت تاریخچه خوانده شده برای کاربر لاگین شده
           if (userId) {
+            console.log("registerVisit test 5");
             try {
+              console.log("registerVisit test 6");
               await ReadHistory.findOneAndUpdate(
                 {
                   user: new mongoose.Types.ObjectId(userId),
@@ -227,6 +231,7 @@ module.exports = {
                 { readAt: new Date() },
                 { upsert: true, new: true }
               );
+              console.log("registerVisit test 6");
             } catch (err) {
               console.error("❌ خطا در ثبت تاریخچه:", err.message);
             }
