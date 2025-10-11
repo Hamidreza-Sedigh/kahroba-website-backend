@@ -9,6 +9,7 @@ const auth = require("../middlewares/auth");
 
 // Protected: فقط کاربران لاگین شده می‌توانند آمار داشبورد را ببینند
 // router.get("/stats", verifyToken, dashboardController.getStats);
+router.get("/users/paginated", auth, dashboardController.getUsersPaginated);
 
 router.use("/users", usersRoutes);
 
