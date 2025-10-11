@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["admin", "reporter", "user"],
-    default: "admin",
+    default: "user",
   },
   // ✅ فیلد جدید: وضعیت فعال بودن
   active: {
