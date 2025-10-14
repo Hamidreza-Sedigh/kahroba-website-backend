@@ -8,6 +8,9 @@ const userRoutes = require("./routes/userRoutes");
 const sourceRoutes = require("./routes/sourceRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const publicRoutes = require('./routes/public');
+const rateRoutes = require('./routes/rateRoutes.js');
+
+
 
 const connectDB =  require('./config/db');
 // const authRoutes = require("./routes/authRoutes");
@@ -47,6 +50,7 @@ app.use("/api/news", newsRoutes);
 app.use("/api/auth", userRoutes);
 app.use("/api/sources", sourceRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/rate", rateRoutes);
 app.use('/api', publicRoutes);
 
 // صفحه 404
