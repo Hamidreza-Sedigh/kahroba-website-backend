@@ -6,14 +6,10 @@ const ContactMessageSchema = new mongoose.Schema(
     email: { type: String, required: true },
     subject: { type: String, required: true },
     message: { type: String, required: true },
-    ip: { type: String }, // افزودن IP
-    read: { type: Boolean, default: false }, // 👈 این خط اضافه شود
+    ip: { type: String },
+    read: { type: Boolean, default: false },
   },    
   { timestamps: true }
-
 )
 
 module.exports = mongoose.model('ContactMessage', ContactMessageSchema);
-
-// export default mongoose.models.ContactMessage ||
-//   mongoose.model("ContactMessage", ContactMessageSchema);
