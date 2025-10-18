@@ -23,5 +23,7 @@ router.get("/reports", auth, isAdmin, getReports);
 router.patch("/reports/:id/read", auth, isAdmin, markReportAsRead);
 router.delete("/reports/:id", auth, isAdmin, deleteReport);
 
+router.get('/stats', auth, dashboardController.getUserStats);
+
 
 module.exports = router;
