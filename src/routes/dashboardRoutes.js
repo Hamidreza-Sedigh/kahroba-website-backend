@@ -24,6 +24,8 @@ router.patch("/reports/:id/read", auth, isAdmin, markReportAsRead);
 router.delete("/reports/:id", auth, isAdmin, deleteReport);
 
 router.get('/stats', auth, dashboardController.getUserStats);
+// آمار مطالعه در ۷ روز گذشته
+router.get("/weekly-reads", auth, dashboardController.getWeeklyReads);
 
 
 module.exports = router;
