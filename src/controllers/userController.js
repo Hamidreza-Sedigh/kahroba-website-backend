@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require('../config/index');
 
-
 const JWT_SECRET = config.jwt.secret;
 
 exports.registerUser = async (req, res) => {
@@ -85,5 +84,35 @@ exports.loginUser = async (req, res) => {
   } catch (err) {
     console.error("loginUser error:", err);
     res.status(500).json({ message: "خطای سرور", error: err.message });
+  }
+};
+
+exports.getMyInfo = async (req, res) => {
+  console.log("getMyInfo started...");
+  try {
+    const user = await User.findById(req.user.userId).select("-password");
+    if (!user) return res.status(404).json({ message: "کاربر یافت نشد" });
+    res.json(user);
+  } catch (err) {
+    console.log("getMyInfo err:", err);
+    console.error(err);
+    res.status(500).json({ message: "خطا در دریافت اطلاعات" });
+  }
+};
+
+exports.editMyInfo = async (req, res) => {
+  console.log("editMyInfo started...");
+  try {
+    const updates = { name: req.body.name, email: req.body.email };
+    
+    const user = await User.findByIdAndUpdate(req.user.userId, updates, {
+      new: true,
+    }).select("-password");
+
+    res.json(user);
+  } catch (err) {
+    console.log("editMyInfo err:", err);
+    console.error(err);
+    res.status(500).json({ message: "خطا در بروزرسانی اطلاعات" });
   }
 };

@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
   active: { type: Boolean, default: true },
   crawlerAdmin: { type: Boolean, default: false },
   providers: [{ type: String, enum: ["local", "google", "telegram"], default: "local" }],
+  avatar: { type: String, default: "" },
   createdAt: { type: Date, default: Date.now },
 });
 
