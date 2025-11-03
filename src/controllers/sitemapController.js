@@ -24,6 +24,7 @@ ${urlset}
 
 // index sitemap
 exports.getSitemapIndex = async (req, res) => {
+  console.log("getSitemapIndex started...");
   try {
     const totalNews = await News.countDocuments();
     const totalFiles = Math.ceil(totalNews / MAX_URLS_PER_FILE);
@@ -50,6 +51,7 @@ exports.getSitemapIndex = async (req, res) => {
 
 // فایل جزئی
 exports.getSitemapFile = async (req, res) => {
+  console.log("getSitemapFile started...");
   try {
     const fileNum = parseInt(req.params.fileNum);
     const skip = (fileNum - 1) * MAX_URLS_PER_FILE;
