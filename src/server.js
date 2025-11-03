@@ -10,6 +10,7 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const publicRoutes = require('./routes/public');
 const rateRoutes = require('./routes/rateRoutes.js');
 const contactRoutes = require('./routes/contactRoutes');
+const sitemapRoutes = require('./routes/sitemapRoutes');
 
 
 const connectDB =  require('./config/db');
@@ -53,6 +54,8 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/rate", rateRoutes);
 app.use("/api/contact", contactRoutes);
 app.use('/api', publicRoutes);
+app.use('/', sitemapRoutes);
+
 
 // صفحه 404
 app.use((req, res) => {
