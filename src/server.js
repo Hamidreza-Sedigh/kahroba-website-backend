@@ -42,6 +42,8 @@ app.use(cors({
   credentials: true,
 }));
 
+console.log("Registering routes...");
+
 
 // Routes
 app.get('/api/status', (req, res) => {
@@ -57,8 +59,15 @@ app.use('/api', publicRoutes);
 app.use('/', sitemapRoutes);
 
 
+console.log("Routes registered:");
+console.log("- /api/* -> publicRoutes");
+console.log("- /sitemap-news.xml + /sitemap-news-:fileNum.xml -> sitemapRoutes");
+
+
 // صفحه 404
 app.use((req, res) => {
+  console.log("404 hit for:", req.originalUrl); // << این خیلی مهمه
+
     res.status(404).send('<h1>صفحه پیدا نشد</h1><a href="/">بازگشت به خانه</a>');
 });
 
