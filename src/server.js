@@ -42,9 +42,6 @@ app.use(cors({
   credentials: true,
 }));
 
-console.log("Registering routes...");
-
-
 // Routes
 app.get('/api/status', (req, res) => {
   res.send({ status: 200 });
@@ -57,12 +54,6 @@ app.use("/api/rate", rateRoutes);
 app.use("/api/contact", contactRoutes);
 app.use('/api', publicRoutes);
 app.use('/', sitemapRoutes);
-
-
-console.log("Routes registered:");
-console.log("- /api/* -> publicRoutes");
-console.log("- /sitemap-news.xml + /sitemap-news-:fileNum.xml -> sitemapRoutes");
-
 
 // صفحه 404
 app.use((req, res) => {
