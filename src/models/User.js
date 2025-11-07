@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
   providers: [{ type: String, enum: ["local", "google", "telegram"], default: "local" }],
   avatar: { type: String, default: "" },
   createdAt: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 
 // حداقل یکی از email یا phone باید وجود داشته باشد

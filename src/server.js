@@ -1,6 +1,7 @@
 const express =    require('express');
 const bodyParser = require("body-parser");
 const cors =       require('cors');
+const path = require("path");
 
 const config =     require("./config");
 const newsRoutes = require("./routes/newsRoutes");
@@ -41,6 +42,9 @@ app.use(cors({
   },
   credentials: true,
 }));
+
+// app.use(express.static("public"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.get('/api/status', (req, res) => {

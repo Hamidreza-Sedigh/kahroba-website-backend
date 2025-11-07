@@ -116,3 +116,30 @@ exports.editMyInfo = async (req, res) => {
     res.status(500).json({ message: "خطا در بروزرسانی اطلاعات" });
   }
 };
+
+exports.uploadAvatar = async (req, res) => {
+  console.log("uploadAvatar");
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "هیچ فایلی ارسال نشده است" });
+    }
+
+    // مسیر ذخیره‌شده فایل (مثلاً /uploads/avatar-123.png)
+    const avatarPath = `/uploads/${req.file.filename}`;
+
+    // بروزرسانی در دیتابیس
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { avatar: avatarPath },
+      { new: true }
+    );
+
+    res.json({
+      message: "عکس پروفایل با موفقیت آپلود شد",
+      avatar: user.avatar,
+    });
+  } catch (err) {
+    console.error("Upload error:", err);
+    res.status(500).json({ message: "خطای سرور در آپلود تصویر" });
+  }
+};
