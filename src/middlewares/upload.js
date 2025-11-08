@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 // مسیر مقصد فایل‌ها
-const uploadDir = path.join(__dirname, "..", "uploads", "avatars");
+const uploadDir =  path.join(__dirname, "../../uploads/avatars");
 
 // اطمینان از وجود دایرکتوری
 if (!fs.existsSync(uploadDir)) {

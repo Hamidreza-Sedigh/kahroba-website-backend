@@ -119,17 +119,20 @@ exports.editMyInfo = async (req, res) => {
 
 exports.uploadAvatar = async (req, res) => {
   console.log("uploadAvatar");
+  console.log("req.user =>", req.user);
+  console.log("req.file =>", req.file);
+
   try {
     if (!req.file) {
       return res.status(400).json({ message: "هیچ فایلی ارسال نشده است" });
     }
 
     // مسیر ذخیره‌شده فایل (مثلاً /uploads/avatar-123.png)
-    const avatarPath = `/uploads/${req.file.filename}`;
+    const avatarPath = `/uploads/avatars/${req.file.filename}`;
 
     // بروزرسانی در دیتابیس
     const user = await User.findByIdAndUpdate(
-      req.user.id,
+      req.user.userId,
       { avatar: avatarPath },
       { new: true }
     );
