@@ -2,6 +2,9 @@ const News = require('../models/News');
 const ReadHistory = require('../models/ReadHistory');
 const mongoose = require("mongoose");
 
+const relatedCache = {}; // { shortId: { data: [...], time: timestamp } }
+const CACHE_DURATION = 15 * 60 * 1000; // 15 دقیقه
+
 module.exports = {
     // دریافت همه خبرها
     async getAllNews(req, res) {
@@ -273,5 +276,34 @@ module.exports = {
         }
     },
 
+    async getRelatedNews(req, res) {
+      try {
+        const { shortId } = req.params;
+        // بررسی کش
+        if (relatedCache[shortId] && Date.now() - relatedCache[shortId].time < CACHE_DURATION) {
+          return res.json({ related: relatedCache[shortId].data, source: 'cache' });
+        }
+        // خبر اصلی را پیدا کن
+        const currentNews = await News.findOne({ shortId });
+        if (!currentNews) return res.status(404).json({ message: 'خبر پیدا نشد' });
+        // 3 خبر مرتبط بر اساس دسته‌بندی، به جز خبر اصلی
+        const relatedNews = await News.find({
+          category: currentNews.category,
+          shortId: { $ne: currentNews.shortId }
+        })
+          .limit(3)
+          .sort({ date: -1 }) // آخرین اخبار
+          .select('shortId title imageUrl date category'); // فیلدهای ضروری
+
+        // ذخیره در کش
+        relatedCache[shortId] = { data: relatedNews, time: Date.now() };
+
+        res.json({ related: relatedNews, source: 'db' });
+
+      } catch (error) {
+        console.error('Error fetching related news:', error);
+        res.status(500).json({ message: 'خطا در دریافت اخبار مرتبط' });
+      }
+    }
 
 };

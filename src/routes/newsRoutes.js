@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const { getAllNews, getNewsById } = require("../controllers/newsController");
 const newsController = require("../controllers/newsController");
 
 const optionalAuth = require('../middlewares/optionalAuth');
@@ -16,6 +15,7 @@ router.get('/id/:id', optionalAuth, newsController.getNewsById);// in fekonam ba
 router.get('/:shortId', optionalAuth, newsController.getNewsByShortId);
 router.post('/:shortId/visit', optionalAuth, newsController.registerVisit);
 
+router.get('/:shortId/related', optionalAuth, newsController.getRelatedNews);
 
 router.get('/', newsController.getFilteredNews);
 
