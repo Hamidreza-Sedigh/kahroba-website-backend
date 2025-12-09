@@ -277,6 +277,7 @@ module.exports = {
     },
 
     async getRelatedNews(req, res) {
+      console.log("getRelatedNews called.");
       try {
         const { shortId } = req.params;
         // بررسی کش
@@ -301,7 +302,7 @@ module.exports = {
         const relatedNews = await News.find(filter)
           .limit(3)
           .sort({ date: -1 }) // آخرین اخبار
-          .select('shortId title imageUrl date category subCategory');
+          .select('shortId title imageUrl date category subCategory sourceName');
 
 
         // ذخیره در کش
