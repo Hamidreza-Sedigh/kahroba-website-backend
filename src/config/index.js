@@ -9,7 +9,7 @@ if (process.env.DB_USER) {
   console.log("LOG TEST - success")
   const user = process.env.DB_USER;
   const pass = encodeURIComponent(process.env.DB_PASS || '');
-  dbUri = `mongodb://${user}:${pass}@${process.env.DB_HOST}/${process.env.DB_NAME}?authSource=admin`;
+  dbUri = `mongodb://${user}:${pass}@${process.env.DB_HOST}/${process.env.DB_NAME}?authSource=kahrobaDB`;
   console.log("LOG TEST ->", dbUri);
 } else {
   console.log("LOG TEST -> else executed.");
