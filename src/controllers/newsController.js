@@ -277,6 +277,7 @@ module.exports = {
     },
 
     async getRelatedNews(req, res) {
+      console.log("getRelatedNews called.");
       try {
         const { shortId } = req.params;
         // بررسی کش
@@ -287,13 +288,22 @@ module.exports = {
         const currentNews = await News.findOne({ shortId });
         if (!currentNews) return res.status(404).json({ message: 'خبر پیدا نشد' });
         // 3 خبر مرتبط بر اساس دسته‌بندی، به جز خبر اصلی
-        const relatedNews = await News.find({
-          category: currentNews.category,
-          shortId: { $ne: currentNews.shortId }
-        })
+        // تعیین فیلتر
+        let filter = { 
+          shortId: { $ne: currentNews.shortId } // به جز خود خبر
+        };
+        if (currentNews.subCategory) {
+          // اگر subCategory دارد، فقط اخبار همان زیرشاخه
+          filter.subCategory = currentNews.subCategory;
+        } else {
+          // اگر ندارد، از category استفاده کن
+          filter.category = currentNews.category;
+        }
+        const relatedNews = await News.find(filter)
           .limit(3)
           .sort({ date: -1 }) // آخرین اخبار
-          .select('shortId title imageUrl date category'); // فیلدهای ضروری
+          .select('shortId title imageUrl date category subCategory sourceName');
+
 
         // ذخیره در کش
         relatedCache[shortId] = { data: relatedNews, time: Date.now() };
