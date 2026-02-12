@@ -7,12 +7,16 @@ module.exports = {
   async createContact(req, res) {
     try {
       console.log("ContactController:", req.body);
+      console.log('req.ip:', req.ip);
+      console.log('x-forwarded-for:', req.headers['x-forwarded-for']);
+      console.log('remoteAddress:', req.socket.remoteAddress);
       const { name, email, subject, message } = req.body;
       if (!name || !email || !subject || !message) {
         return res.status(400).json({ message: "لطفاً همه فیلدها را پر کنید." });
       }
 
-      const ip = req.headers["x-forwarded-for"]?.split(",")[0] || req.connection.remoteAddress;
+      // const ip = req.headers["x-forwarded-for"]?.split(",")[0] || req.connection.remoteAddress;
+      const ip = req.ip;
 
       const newMessage = new ContactMessage({
         name,

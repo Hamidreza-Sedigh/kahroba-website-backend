@@ -25,6 +25,8 @@ connectDB(config.db.uri);
 
 
 // Middleware
+app.set('trust proxy', true); // for getting correct ip
+
 //app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
