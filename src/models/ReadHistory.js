@@ -9,5 +9,6 @@ const readHistorySchema = new mongoose.Schema({
 
 // اضافه کردن index منحصربه‌فرد
 readHistorySchema.index({ user: 1, news: 1 }, { unique: true });
+readHistorySchema.index({ user: 1, readAt: -1 });
 
 module.exports = mongoose.model('ReadHistory', readHistorySchema);

@@ -22,9 +22,18 @@ const NewsSchema = new mongoose.Schema({
       },
 })
 
+// 🔎 search
 NewsSchema.index({ title: 'text', description: 'text', passage: 'text' });
-NewsSchema.index({ date: 1, views: -1 });
-NewsSchema.index({ category: 1 });
+
+// 📰 latest news
+NewsSchema.index({ date: -1 });
+
+// 🏷 category + latest
+NewsSchema.index({ category: 1, date: -1 });
+
+// 🔥 most viewed (day / week / month)
+NewsSchema.index({ date: -1, views: -1 });
+
 
 
 module.exports = mongoose.model('News', NewsSchema)
