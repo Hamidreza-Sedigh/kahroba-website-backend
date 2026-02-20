@@ -16,6 +16,7 @@ router.get("/users/paginated", auth, dashboardController.getUsersPaginated);
 router.use("/users", usersRoutes);
 
 router.get("/history", auth, readHistoryController.getUserReadHistory);
+router.delete("/history", auth, readHistoryController.deleteUserReadHistory);
 router.get("/users", dashboardController.getUsers);
 
 
