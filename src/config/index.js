@@ -41,6 +41,11 @@ const config = {
     secret: process.env.JWT_SECRET || 'fallback-secret',
     expiresIn: process.env.JWT_EXPIRES_IN || '7d',
   },
+
+  telegram: {
+    botToken: process.env.TELEGRAM_BOT_TOKEN,
+    chatId: process.env.TELEGRAM_CHAT_ID
+  }
 };
 
 module.exports = config;
