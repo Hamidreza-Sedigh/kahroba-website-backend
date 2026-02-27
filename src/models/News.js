@@ -20,6 +20,16 @@ const NewsSchema = new mongoose.Schema({
         type: String,
         default: null, // اگر enclosure نبود، مقدار null ذخیره میشه
       },
+    // Telegram
+    telegramSent: {
+        type: Boolean,
+        default: false,
+        index: true
+    },
+    telegramSentAt: {
+        type: Date,
+        default: null
+    }
 })
 
 // 🔎 search
@@ -34,6 +44,7 @@ NewsSchema.index({ category: 1, date: -1 });
 // 🔥 most viewed (day / week / month)
 NewsSchema.index({ date: -1, views: -1 });
 
+NewsSchema.index({ telegramSent: 1, date: -1 });
 
 
 module.exports = mongoose.model('News', NewsSchema)

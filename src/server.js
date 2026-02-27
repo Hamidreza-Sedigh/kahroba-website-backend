@@ -1,7 +1,8 @@
 const express =    require('express');
 const bodyParser = require("body-parser");
 const cors =       require('cors');
-const path = require("path");
+const path =       require("path");
+
 
 const config =     require("./config");
 const newsRoutes = require("./routes/newsRoutes");
@@ -12,6 +13,8 @@ const publicRoutes = require('./routes/public');
 const rateRoutes = require('./routes/rateRoutes.js');
 const contactRoutes = require('./routes/contactRoutes');
 const sitemapRoutes = require('./routes/sitemapRoutes');
+
+
 
 
 const connectDB =  require('./config/db');
@@ -68,6 +71,8 @@ app.use((req, res) => {
 
     res.status(404).send('<h1>صفحه پیدا نشد</h1><a href="/">بازگشت به خانه</a>');
 });
+
+require("./jobs/cron");
 
 app.listen(PORT, () => {
     console.log(`Server is running ... on ${config.app.host}`);
