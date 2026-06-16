@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const readHistorySchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   news: { type: mongoose.Schema.Types.ObjectId, ref: 'News', required: true },
   readAt: { type: Date, default: Date.now }
 });
