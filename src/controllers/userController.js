@@ -146,3 +146,36 @@ exports.uploadAvatar = async (req, res) => {
     res.status(500).json({ message: "خطای سرور در آپلود تصویر" });
   }
 };
+
+exports.deleteMyAccount = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    await User.findByIdAndUpdate(user._id, {
+      isDeleted: true,
+      deletedAt: new Date(),
+      active: false,
+
+      username: `deleted_${user.username || "user"}_${Date.now()}`,
+      email: null,
+      phone: null,
+    });
+
+    return res.json({
+      success: true,
+      message: "Account deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

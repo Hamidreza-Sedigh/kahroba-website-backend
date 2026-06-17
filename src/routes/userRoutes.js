@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middlewares/auth");
-const upload = require("../middlewares/upload"); // ⬅️ میدل‌ور جدید
+const upload = require("../middlewares/upload");
 const {
   registerUser,
   loginUser,
   editMyInfo,
   getMyInfo,
-  uploadAvatar, // ⬅️ کنترلر جدید
+  uploadAvatar,
+  deleteMyAccount,
 } = require("../controllers/userController");
 
 router.post("/register", registerUser);
@@ -21,5 +22,7 @@ router.put("/me", auth, editMyInfo);
 
 // ✅ آپلود آواتار
 router.post("/me/avatar", auth, upload.single("avatar"), uploadAvatar);
+
+router.delete("/me", auth, deleteMyAccount);
 
 module.exports = router;

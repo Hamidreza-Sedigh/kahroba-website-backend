@@ -16,6 +16,15 @@ const UserSchema = new mongoose.Schema({
   providers: [{ type: String, enum: ["local", "google", "telegram"], default: "local" }],
   avatar: { type: String, default: "" },
   createdAt: { type: Date, default: Date.now },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
+
+  deletedAt: {
+    type: Date,
+    default: null,
+  },
 }, { timestamps: true });
 
 
