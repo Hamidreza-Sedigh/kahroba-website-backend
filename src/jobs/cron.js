@@ -10,4 +10,4 @@ console.log("Cron scheduler started");
 // });
 
 
-telegramJob();
+// telegramJob();
