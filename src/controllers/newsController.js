@@ -180,7 +180,7 @@ module.exports = {
       
         } catch (err) {
           console.error("Error in getFilteredNews:", err);
-          res.status(500).json({ message: "خطا در دریافت اخبار" });
+          res.status(500).json({ message: "خطا در دریافت اخبار filtered" });
         }
     },
 
