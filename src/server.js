@@ -35,7 +35,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // فعال‌سازی CORS
-const allowedOrigins = ["http://localhost:3000", "http://localhost:3001", 'http://kahrobanet.ir'];
+const allowedOrigins = ["http://localhost:3000", "http://localhost:3001", 'http://kahrobanet.ir',
+  "https://localhost:3000" , "https://kahrobanet.ir"
+];
 
 app.use(cors({
   origin: function (origin, callback) {

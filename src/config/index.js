@@ -22,7 +22,7 @@ const config = {
 
   app: {
     port: process.env.PORT || 8000,
-    host: process.env.API_HOST || `http://localhost:${process.env.PORT || 8000}`,
+    host: process.env.API_HOST || `https://localhost:${process.env.PORT || 8000}`,
   },
 
   db: {
