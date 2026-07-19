@@ -1,6 +1,6 @@
 const News = require('../models/News');
 
-const BASE_URL = 'http://kahrobanet.ir';
+const BASE_URL = 'https://kahrobanet.ir';
 const MAX_URLS_PER_FILE = 10000;
 
 // ساخت XML برای یک فایل جزئی
